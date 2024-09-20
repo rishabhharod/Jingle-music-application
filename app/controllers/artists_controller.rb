@@ -1,6 +1,8 @@
 class ArtistsController < ApplicationController
-  before_action :set_artist, only: [:update,:destroy]
+  before_action :set_artist, only: [:update,:destroy,:show]
+
   def create
+    debugger
     artist = Artist.new(artist_params)
     if artist.save
       render json: {message: 'Artist created',artist: artist}, status: :ok
@@ -25,9 +27,19 @@ class ArtistsController < ApplicationController
     end 
   end
 
+  def show
+    @artist
+    if @artist.empty?
+      render json: {message: 'No songs found'}, status: :not_found
+    else
+      songs = @artist.songs
+    end
+  end
+
   private
   def artist_params
-    params.require(:artists).permit(:genre,:name,:biography)
+    debugger
+    params.require(:artist).permit(:genre,:name,:biography)
   end
 
   def set_artist

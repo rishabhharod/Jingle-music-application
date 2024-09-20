@@ -8,8 +8,24 @@ class CollectionsController < ApplicationController
     end
   end
 
+  def index
+    collections = Collection.all
+    if collections.empty?
+      render json: {message: 'Pls create collection'}, status: :no_content
+    else
+      collections.each do |collection|
+        songs = collection.playlists
+      end
+    end
+  end
+
+  def show
+    collection = Collection.find_by(id: params[:id])
+    songs = collection.playlists
+  end
+
   def update
-    if @collection.update
+    if @collection.update(collection_params)
       render json: {message: 'Collection updated', collection: @collection}, status: :ok
     else
       render json: {message: @collection.errors.full_messages}, status: :not_found
