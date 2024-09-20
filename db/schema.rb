@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_19_121215) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_20_093421) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,7 +55,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_19_121215) do
     t.bigint "wishlist_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
     t.index ["song_id"], name: "index_user_playlists_on_song_id"
     t.index ["wishlist_id"], name: "index_user_playlists_on_wishlist_id"
   end
@@ -72,6 +71,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_19_121215) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end
 
