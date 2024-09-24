@@ -1,7 +1,11 @@
 class UserPlaylistController < ApplicationController
+  include SetUser
+
+  before_action :set_user
   before_action :set_wishlist
 
   def create
+    debugger
     user_playlist = @wishlist.user_playlists.find_or_initialize(song_id: params[:song_id])
     if user_playlist.new_record?
       user_playlist.save

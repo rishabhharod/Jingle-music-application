@@ -1,4 +1,5 @@
 class CollectionsController < ApplicationController
+  before_action :set_collection, only: [:show, :update, :destroy]
   def create
     collection = Collection.new(collection_params)
     if collection.save
@@ -20,8 +21,12 @@ class CollectionsController < ApplicationController
   end
 
   def show
-    collection = Collection.find_by(id: params[:id])
-    songs = collection.playlists
+    playlists = @collection.playlists
+    if playlists.empty?
+      render json: {message: 'This collection has no songs'}, status: :no_content
+    else
+      render json: {message: "#{@collection.title}", songs: @collection.all_songs(playlists)}, status: :ok
+    end
   end
 
   def update
@@ -46,6 +51,6 @@ class CollectionsController < ApplicationController
   end
 
   def set_collection
-    @collection = Collection.find_by(id: params[:id])
+    @collection = Collection.find_by(id: params[:collection][:id])
   end
 end
